@@ -17,6 +17,9 @@ namespace Dzenaria
         private SpriteBatch spriteBatch;
         private KeyboardState oldKeyboardState;
 
+        bool instaHeal = false;
+        bool manaInfusion = false;
+
         internal InjectedMain() : base() { }
 
         protected override void LoadContent()
@@ -38,8 +41,7 @@ namespace Dzenaria
             KeyboardState state = Keyboard.GetState();
             Player local = Main.player[Main.myPlayer]; // get our player
 
-            bool instaHeal=false;
-            bool manaInfusion=false;
+
 
             #region GhostMode
             if (local.ghost)
@@ -52,12 +54,12 @@ namespace Dzenaria
                 if (local.ghost)
                 {
                     local.ghost = false;
-                    Terraria.Main.NewText("Ghost mode activated", 200, 200, 255);
+                    Terraria.Main.NewText("Ghost mode deactivated", 200, 200, 255);
                 }
                 else
                 {
                     local.ghost = true;
-                    Terraria.Main.NewText("Ghost mode deactivated", 200, 200, 255); 
+                    Terraria.Main.NewText("Ghost mode activated", 200, 200, 255); 
                 }
             }
             #endregion
@@ -73,12 +75,33 @@ namespace Dzenaria
                 if (instaHeal)
                 {
                     instaHeal = false;
-                    Terraria.Main.NewText("Heal activated", 200, 200, 255);
+                    Terraria.Main.NewText("Heal deactivated", 200, 200, 255);
                 }
                 else
                 {
                     instaHeal = true;
-                    Terraria.Main.NewText("Heal deactivated", 200, 200, 255);
+                    Terraria.Main.NewText("Heal activated", 200, 200, 255);
+                }
+            }
+            #endregion
+
+            #region Mana infusion function
+            if (manaInfusion)
+            {
+                local.statMana += 100;
+            }
+
+            if (state.IsKeyDown(Keys.NumPad2) && oldKeyboardState.IsKeyUp(Keys.NumPad2))
+            {
+                if (manaInfusion)
+                {
+                    manaInfusion = false;
+                    Terraria.Main.NewText("Mana infusion deactivated", 200, 200, 255);
+                }
+                else
+                {
+                    manaInfusion = true;
+                    Terraria.Main.NewText("Mana infusion activated", 200, 200, 255);
                 }
             }
             #endregion
@@ -93,7 +116,6 @@ namespace Dzenaria
         {
             InjectedMain game = new InjectedMain();
             game.Run();
-            Console.ReadKey();
         }
     }
 }
