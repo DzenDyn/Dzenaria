@@ -38,28 +38,29 @@ namespace Dzenaria
             KeyboardState state = Keyboard.GetState();
             Player local = Main.player[Main.myPlayer]; // получаем нашего игрока
 
-            local.ghost = state.IsKeyDown(Keys.LeftShift);
+
+            #region GhostMode
             if (local.ghost)
             {
                 local.Ghost();
             }
 
-            // пишем в чат
             if (state.IsKeyDown(Keys.LeftShift) && oldKeyboardState.IsKeyUp(Keys.LeftShift))
             {
                 if (local.ghost)
                 {
                     local.ghost = false;
-                    Terraria.Main.NewText("Режим призрака деактивирован", 200, 200, 255);
+                    Terraria.Main.NewText("Ghost mode activated", 200, 200, 255);
                 }
                 else
                 {
                     local.ghost = true;
-                    Terraria.Main.NewText("Режим призрака активирован", 200, 200, 255); 
+                    Terraria.Main.NewText("Ghost mode deactivated", 200, 200, 255); 
                 }
-               
-                
             }
+            #endregion
+
+
 
             oldKeyboardState = state;
         }
