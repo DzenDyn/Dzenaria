@@ -21,7 +21,6 @@ namespace Dzenaria
         private bool instaHeal = false;
         private bool manaInfusion = false;
         private bool aqualung = false;
-        private bool eater = false;
         private Vector2 teleportTo;
 
         internal InjectedMain() : base() { }
@@ -95,12 +94,12 @@ namespace Dzenaria
                 if (manaInfusion)
                 {
                     manaInfusion = false;
-                    Terraria.Main.NewText("Mana infusion deactivated", 200, 200, 255);
+                    Terraria.Main.NewText("Mana infusion deactivated", 255, 100, 100);
                 }
                 else
                 {
                     manaInfusion = true;
-                    Terraria.Main.NewText("Mana infusion activated", 200, 200, 255);
+                    Terraria.Main.NewText("Mana infusion activated", 100, 255, 100);
                 }
             }
             #endregion
@@ -139,21 +138,18 @@ namespace Dzenaria
             }
             #endregion
 
-            #region Eater
+            #region GiveGold function
             if (state.IsKeyDown(Keys.F3) && oldKeyboardState.IsKeyUp(Keys.F3))
             {
-                if (local.eater)
+                for (var i = 0; i < 100; i++)
                 {
-                    local.eater = false;
-                    Terraria.Main.NewText("Eater deactivated", 255, 100, 100);
+                    local.PutItemInInventory(73, -1);
                 }
-                else
-                {
-                    local.eater = true;
-                    Terraria.Main.NewText("Eater activated", 100, 255, 100);
-                }
+                Terraria.Main.NewText("You get 100 gold coins", 255, 215, 0);                
             }
             #endregion
+
+
             oldKeyboardState = state;
         }
 
