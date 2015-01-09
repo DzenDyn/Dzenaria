@@ -21,6 +21,7 @@ namespace Dzenaria
         private bool instaHeal = false;
         private bool manaInfusion = false;
         private bool aqualung = false;
+        private Vector2 teleportTo;
 
         internal InjectedMain() : base() { }
 
@@ -51,12 +52,12 @@ namespace Dzenaria
                 if (local.ghost)
                 {
                     local.ghost = false;
-                    Terraria.Main.NewText("Ghost mode deactivated", 200, 200, 255);
+                    Terraria.Main.NewText("Ghost mode deactivated", 255, 100, 100);
                 }
                 else
                 {
                     local.ghost = true;
-                    Terraria.Main.NewText("Ghost mode activated", 200, 200, 255);
+                    Terraria.Main.NewText("Ghost mode activated", 100, 255, 100);
                 }
             }
             #endregion
@@ -72,12 +73,12 @@ namespace Dzenaria
                 if (instaHeal)
                 {
                     instaHeal = false;
-                    Terraria.Main.NewText("Heal deactivated", 200, 200, 255);
+                    Terraria.Main.NewText("Heal deactivated", 255, 100, 100);
                 }
                 else
                 {
                     instaHeal = true;
-                    Terraria.Main.NewText("Heal activated", 200, 200, 255);
+                    Terraria.Main.NewText("Heal activated", 100, 255, 100);
                 }
             }
             #endregion
@@ -114,13 +115,26 @@ namespace Dzenaria
                 if (aqualung)
                 {
                     aqualung = false;
-                    Terraria.Main.NewText("Aqualung deactivated", 200, 200, 255);
+                    Terraria.Main.NewText("Aqualung deactivated", 255, 100, 100);
                 }
                 else
                 {
                     aqualung = true;
-                    Terraria.Main.NewText("Aqualung activated", 200, 200, 255);
+                    Terraria.Main.NewText("Aqualung activated", 100, 255, 100);
                 }
+            }
+            #endregion
+
+            #region Teleport function
+
+            if (state.IsKeyDown(Keys.F1) && oldKeyboardState.IsKeyUp(Keys.F1))
+            {
+                teleportTo = local.position;
+                Terraria.Main.NewText("Point for teleporting saved", 100, 255, 100);
+            }
+            if (state.IsKeyDown(Keys.F2) && oldKeyboardState.IsKeyUp(Keys.F2))
+            {
+                local.Teleport(teleportTo,3);
             }
             #endregion
 
@@ -131,12 +145,12 @@ namespace Dzenaria
         {
             base.Draw(gameTime);
 
-            Player local = Main.player[Main.myPlayer]; // get our player
+            //Player local = Main.player[Main.myPlayer]; // get our player
 
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied);
-            spriteBatch.DrawString(font, "Dzenaria stats:", new Vector2(GraphicsDevice.Viewport.Width-250, GraphicsDevice.Viewport.Height-250), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
-            spriteBatch.End();
+            //spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied);
+            //spriteBatch.DrawString(font, "Dzenaria stats:", new Vector2(GraphicsDevice.Viewport.Width-250, GraphicsDevice.Viewport.Height-250), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+            //spriteBatch.End();
         }
     }
 
