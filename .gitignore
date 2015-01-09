@@ -15,6 +15,7 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+!Dzenaria.exe
 
 # Roslyn cache directories
 *.ide/
