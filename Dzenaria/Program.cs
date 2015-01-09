@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
@@ -10,7 +13,6 @@ using Terraria;
 
 namespace Dzenaria
 {
-
     sealed class InjectedMain : Terraria.Main
     {
         private SpriteFont font;
@@ -134,7 +136,7 @@ namespace Dzenaria
             }
             if (state.IsKeyDown(Keys.F2) && oldKeyboardState.IsKeyUp(Keys.F2))
             {
-                local.Teleport(teleportTo,3);
+                local.Teleport(teleportTo,2);
             }
             #endregion
 
@@ -149,6 +151,17 @@ namespace Dzenaria
             }
             #endregion
 
+            #region ChangeName function
+            if (state.IsKeyDown(Keys.F12) && oldKeyboardState.IsKeyUp(Keys.F12))
+            {
+                string input = Microsoft.VisualBasic.Interaction.InputBox("Name:", "Enter new name", "Default", -1, -1);
+                if (input != "")
+                {
+                    local.name = input;
+                    Terraria.Main.NewText("Your name now \"" + input + "\"", 255, 0, 255);
+                }
+            }
+            #endregion
 
             oldKeyboardState = state;
         }
@@ -168,10 +181,15 @@ namespace Dzenaria
 
     class Program
     {
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
         static void Main(string[] args)
         {
+            IntPtr h = Process.GetCurrentProcess().MainWindowHandle;
+            ShowWindow(h, 0);
             InjectedMain game = new InjectedMain();
             game.Run();
+            
         }
     }
 }
