@@ -36,8 +36,10 @@ namespace Dzenaria
         {
             base.Draw(gameTime);
             KeyboardState state = Keyboard.GetState();
-            Player local = Main.player[Main.myPlayer]; // получаем нашего игрока
+            Player local = Main.player[Main.myPlayer]; // get our player
 
+            bool instaHeal=false;
+            bool manaInfusion=false;
 
             #region GhostMode
             if (local.ghost)
@@ -60,7 +62,26 @@ namespace Dzenaria
             }
             #endregion
 
+            #region Heal function
+            if (instaHeal)
+            {
+                local.statLife += 100;
+            }
 
+            if (state.IsKeyDown(Keys.NumPad1) && oldKeyboardState.IsKeyUp(Keys.NumPad1))
+            {
+                if (instaHeal)
+                {
+                    instaHeal = false;
+                    Terraria.Main.NewText("Heal activated", 200, 200, 255);
+                }
+                else
+                {
+                    instaHeal = true;
+                    Terraria.Main.NewText("Heal deactivated", 200, 200, 255);
+                }
+            }
+            #endregion
 
             oldKeyboardState = state;
         }
