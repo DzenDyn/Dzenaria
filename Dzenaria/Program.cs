@@ -21,6 +21,7 @@ namespace Dzenaria
         private bool instaHeal = false;
         private bool manaInfusion = false;
         private bool aqualung = false;
+        private bool eater = false;
         private Vector2 teleportTo;
 
         internal InjectedMain() : base() { }
@@ -138,6 +139,21 @@ namespace Dzenaria
             }
             #endregion
 
+            #region Eater
+            if (state.IsKeyDown(Keys.F3) && oldKeyboardState.IsKeyUp(Keys.F3))
+            {
+                if (local.eater)
+                {
+                    local.eater = false;
+                    Terraria.Main.NewText("Eater deactivated", 255, 100, 100);
+                }
+                else
+                {
+                    local.eater = true;
+                    Terraria.Main.NewText("Eater activated", 100, 255, 100);
+                }
+            }
+            #endregion
             oldKeyboardState = state;
         }
 

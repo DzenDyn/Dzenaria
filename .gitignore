@@ -13,7 +13,6 @@ x64/
 build/
 bld/
 [Oo]bj/
-[Rr]elease/
 !Release/Dzenaria.exe
 
 # Roslyn cache directories
