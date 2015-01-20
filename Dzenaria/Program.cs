@@ -163,6 +163,34 @@ namespace Dzenaria
             }
             #endregion
 
+            #region AddItem function
+            if (state.IsKeyDown(Keys.F4) && oldKeyboardState.IsKeyUp(Keys.F4))
+            {
+
+                string input = Microsoft.VisualBasic.Interaction.InputBox("ID:", "Enter item id", "Default", -1, -1);
+                if (input != "")
+                {
+                    try
+                    {
+                        local.PutItemInInventory(Convert.ToInt32(input),-1);
+                        Terraria.Main.NewText("You get item with id "+input, 255, 215, 0);
+                    }
+                    catch (Exception)
+                    {
+                        Terraria.Main.NewText("Cannot add item with id" + input, 255, 100, 100);
+                        return;
+                    }
+                }
+            }
+            #endregion
+
+            #region ShowItem ID function
+            if (state.IsKeyDown(Keys.F5) && oldKeyboardState.IsKeyUp(Keys.F5))
+            {
+                Terraria.Main.NewText(local.inventory[10].ToString(), 255, 100, 100); 
+            }
+            #endregion
+
             oldKeyboardState = state;
         }
 
